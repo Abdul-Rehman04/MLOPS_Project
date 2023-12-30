@@ -2,7 +2,7 @@ name: Continuous Data Generation and DVC Tracking
 
 on:
   schedule:
-    - cron: '0 */4 * * *'  # This example runs every 4 hours, adjust as needed
+    - cron: '*/5 * * * *'  # This example runs every 4 hours, adjust as needed
 
 jobs:
   generate_and_track_data:
