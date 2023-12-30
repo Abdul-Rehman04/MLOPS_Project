@@ -1,0 +1,42 @@
+name: Data Generation and DVC Push
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # This schedule runs the script hourly; modify as needed
+
+jobs:
+  generate-and-push-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Set your Python version here
+
+    - name: Install dependencies
+      run: |
+        pip install pandas numpy
+        pip install dvc[gdrive]
+
+    - name: Generate Data
+      run: python random_data.py
+
+    - name: DVC Add and Commit
+      run: |
+        dvc add dummy_sensor_data.csv
+        git config --global user.name 'Your Name'
+        git config --global user.email 'your-email@example.com'
+        git add dummy_sensor_data.csv.dvc .gitignore
+        git commit -m "Update data [skip ci]"
+
+    - name: DVC Push to Google Drive
+      run: |
+        dvc push
+
+    - name: Push Changes to GitHub
+      run: |
+        git push
