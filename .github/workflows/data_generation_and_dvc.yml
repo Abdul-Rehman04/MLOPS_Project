@@ -1,0 +1,42 @@
+name: Continuous Data Generation and DVC Tracking
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # This example runs every 4 hours, adjust as needed
+
+jobs:
+  generate_and_track_data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Replace with your Python version
+
+    - name: Install dependencies
+      run: |
+        pip install pandas numpy
+        pip install dvc  # Add any other dependencies of your script
+
+    - name: Generate Data
+      run: python random_data.py  # Assuming the script is in the root
+
+    - name: DVC Add
+      run: |
+        dvc add dummy_sensor_data.csv  # Assuming the CSV is in the root
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'Abdul-Rehman04'
+        git config --global user.email 'i191886@nu.edu.pk'
+        git add dummy_sensor_data.csv.dvc .gitignore
+        git commit -m "Update dataset [skip ci]"
+
+    - name: Push changes
+      run: |
+        git push
+        dvc push
