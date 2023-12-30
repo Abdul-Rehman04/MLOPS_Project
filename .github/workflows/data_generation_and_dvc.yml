@@ -2,7 +2,7 @@ name: Continuous Data Generation and DVC Tracking
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *'  # Adjust the schedule as needed
 
 jobs:
   generate_and_track_data:
@@ -15,30 +15,30 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'
+        python-version: '3.8'  # Replace with your Python version
 
     - name: Install dependencies
       run: |
         pip install pandas numpy
-        pip install dvc
+        pip install dvc  # Add any other dependencies of your script
 
     - name: Generate Data
-      run: python random_data.py
+      run: python random_data.py  # Assuming the script is in the root
 
     - name: DVC Add
       run: |
-        dvc add dummy_sensor_data.csv
+        dvc add dummy_sensor_data.csv  # Assuming the CSV is in the root
 
     - name: Commit changes
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
+        git config --global user.name 'Abdul-Rehman04'
+        git config --global user.email 'i191886@nu.edu.pk'
         git add dummy_sensor_data.csv.dvc .gitignore
         git commit -m "Update dataset [skip ci]"
 
     - name: Push changes
       run: |
-        git push --set-upstream origin HEAD:main
+        git config --global user.name 'Abdul-Rehman04'
+        git config --global user.email 'i191886@nu.edu.pk'
+        git -c http.extraHeader="AUTHORIZATION: basic $(echo -n Abdul-Rehman04:${{ secrets.GH_PAT }} | base64)" push
         dvc push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
