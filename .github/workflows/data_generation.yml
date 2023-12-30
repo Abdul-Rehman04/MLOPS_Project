@@ -28,8 +28,8 @@ jobs:
     - name: DVC Add and Commit
       run: |
         dvc add dummy_sensor_data.csv
-        git config --global user.name 'Your Name'
-        git config --global user.email 'your-email@example.com'
+        git config --global user.name 'Abdul Rehman'
+        git config --global user.email 'i191886@nu.edu.pk'
         git add dummy_sensor_data.csv.dvc .gitignore
         git commit -m "Update data [skip ci]"
 
