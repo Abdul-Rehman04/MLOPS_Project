@@ -38,5 +38,7 @@ jobs:
 
     - name: Push changes
       run: |
-        git push
+        git config --global user.name 'Abdul-Rehman04'
+        git config --global user.email 'i191886@nu.edu.pk'
+        git -c http.extraHeader="AUTHORIZATION: basic ${GH_PAT}" push
         dvc push
