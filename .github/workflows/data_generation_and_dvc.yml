@@ -40,10 +40,10 @@ jobs:
       run: |
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
     - name: DVC Push
       run: dvc push
       # env:
-      #   # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   # GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       #   # GOOGLE_APPLICATION_CREDENTIALS_DATA: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DATA }}
